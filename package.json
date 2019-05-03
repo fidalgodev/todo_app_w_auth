@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "firebase": "^5.11.1",
+    "formik": "^1.5.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
@@ -13,7 +14,8 @@
     "redux": "^4.0.1",
     "redux-firestore": "^0.7.3",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "react-scripts start",
