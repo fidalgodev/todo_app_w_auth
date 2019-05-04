@@ -50,7 +50,7 @@ const Menu = styled.div`
   }
 `;
 
-const SideDrawer = () => {
+const SideDrawer = ({ loggedIn }) => {
   const [isOpened, setIsOpened] = useState(false);
   return (
     <>
@@ -61,7 +61,11 @@ const SideDrawer = () => {
         </Wrapper>
       </FixedWrapper>
       <Menu opened={isOpened}>
-        <NavItems mobile clicked={() => setIsOpened(false)} />
+        <NavItems
+          loggedIn={loggedIn}
+          mobile
+          clicked={() => setIsOpened(false)}
+        />
       </Menu>
     </>
   );

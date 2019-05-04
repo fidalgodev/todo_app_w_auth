@@ -15,16 +15,22 @@ const Ul = styled.ul`
   height: 100%;
 `;
 
-const NavItems = ({ mobile, clicked }) => {
-  return (
-    <Nav mobile={mobile}>
+const NavItems = ({ mobile, clicked, loggedIn }) => {
+  let links;
+  if (loggedIn.uid) {
+    links = (
       <Ul mobile={mobile}>
         <NavItem mobile={mobile} clicked={clicked} link="/">
-          home
-        </NavItem>
-        <NavItem mobile={mobile} clicked={clicked} link="/todos">
           Todos
         </NavItem>
+        <NavItem mobile={mobile} clicked={clicked} link="/logout">
+          Logout
+        </NavItem>
+      </Ul>
+    );
+  } else {
+    links = (
+      <Ul mobile={mobile}>
         <NavItem mobile={mobile} clicked={clicked} link="/login">
           Login
         </NavItem>
@@ -32,8 +38,9 @@ const NavItems = ({ mobile, clicked }) => {
           Signup
         </NavItem>
       </Ul>
-    </Nav>
-  );
+    );
+  }
+  return <Nav mobile={mobile}>{links}</Nav>;
 };
 
 export default NavItems;
