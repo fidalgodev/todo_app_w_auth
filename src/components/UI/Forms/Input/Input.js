@@ -7,10 +7,6 @@ const InputWrapper = styled.div`
   position: relative;
   margin-bottom: 3.5rem;
   flex-direction: column;
-
-  &:last-of-type {
-    margin-bottom: 4.5rem;
-  }
 `;
 
 const StyledInput = styled.input`

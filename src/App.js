@@ -6,17 +6,28 @@ import Layout from './hoc/layout/Layout';
 import Home from './containers/Home/Home';
 import Login from './containers/Auth/Login/Login';
 import SignUp from './containers/Auth/SignUp/SignUp';
+import Profile from './containers/Auth/Profile/Profile';
+import VerifyEmail from './containers/Auth/VerifyEmail/VerifyEmail';
+import RecoverPassword from './containers/Auth/RecoverPassword/RecoverPassword';
 import Logout from './containers/Auth/Logout/Logout';
 import Todos from './containers/Todos/Todos';
 
-const App = ({ loggedIn }) => {
-  console.log(loggedIn);
-
+const App = ({ loggedIn, emailVerified }) => {
   let routes;
-  if (loggedIn) {
+
+  if (loggedIn && !emailVerified) {
+    routes = (
+      <Switch>
+        <Route exact path="/verify-email" component={VerifyEmail} />
+        <Route exact path="/logout" component={Logout} />
+        <Redirect to="/verify-email" />
+      </Switch>
+    );
+  } else if (loggedIn && emailVerified) {
     routes = (
       <Switch>
         <Route exact path="/" component={Todos} />
+        <Route exact path="/profile" component={Profile} />
         <Route exact path="/logout" component={Logout} />
         <Redirect to="/" />
       </Switch>
@@ -26,6 +37,7 @@ const App = ({ loggedIn }) => {
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/recover" component={RecoverPassword} />
         <Redirect to="/login" />
       </Switch>
     );
@@ -35,7 +47,8 @@ const App = ({ loggedIn }) => {
 };
 
 const mapStateToProps = ({ firebase }) => ({
-  loggedIn: firebase.auth.uid ? true : null,
+  loggedIn: firebase.auth.uid,
+  emailVerified: firebase.auth.emailVerified,
 });
 
 export default connect(mapStateToProps)(App);

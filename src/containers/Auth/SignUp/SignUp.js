@@ -14,7 +14,7 @@ import * as actions from '../../../store/actions';
 
 const MessageWrapper = styled.div`
   position: absolute;
-  bottom: 0;
+  bottom: -2rem;
 `;
 
 const SignUpSchema = Yup.object().shape({
