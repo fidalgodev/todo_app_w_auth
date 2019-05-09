@@ -26,7 +26,7 @@ const StyledInput = styled.input`
 
 const Error = styled.div`
   color: var(--color-errorRed);
-  visibility: ${({ show }) => (show ? 'visibile' : 'hidden')};
+  visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
   opacity: ${({ show }) => (show ? '1' : '0')};
   transform: translateY(${({ show }) => (show ? '20px' : '10px')});
   transition: all 0.1s;

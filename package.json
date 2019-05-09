@@ -7,7 +7,7 @@
     "formik": "^1.5.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-redux": "^7.0.3",
+    "react-redux": "^5.1.1",
     "react-redux-firebase": "^2.2.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",

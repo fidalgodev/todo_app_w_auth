@@ -7,7 +7,7 @@ const baseStyle = css`
   font-weight: ${({ bold }) => (bold ? '700' : '300')};
   margin-top: 0;
   letter-spacing: 1px;
-  margin-bottom: ${({ noMargin }) => (noMargin ? '0rem' : '5rem')};
+  margin-bottom: ${({ noMargin }) => (noMargin ? '0rem' : '3rem')};
 `;
 
 const Heading1 = styled.h1`
