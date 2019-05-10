@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
@@ -11,7 +11,7 @@ import Input from '../../../components/UI/Forms/Input/Input';
 import Message from '../../../components/UI/Message/Message';
 import { StyledForm } from '../../../hoc/layout/elements';
 
-import * as actions from '../../../store/actions/';
+import * as actions from '../../../store/actions';
 
 const ButtonsWrapper = styled.div`
   display: flex;
@@ -33,36 +33,46 @@ const TodoSchema = Yup.object().shape({
     .min(4, 'Too short.'),
 });
 
-const AddTodo = ({ addTodo, loading, error }) => {
-  const [isOpened, setisOpened] = useState(false);
+const InputTodo = ({
+  editTodo,
+  close,
+  opened,
+  addTodo,
+  loading,
+  error,
+  editTodoAction,
+}) => {
+  const loadingText = editTodo ? 'Editing...' : 'Adding...';
+
   return (
     <>
-      <Button color="main" contain onClick={() => setisOpened(true)}>
-        Add Todo
-      </Button>
-      <Modal opened={isOpened} close={() => setisOpened(false)}>
+      <Modal opened={opened} close={close}>
         <Heading noMargin size="h1" color="white">
-          Add your new todo
+          {editTodo ? 'Edit your todo' : 'Add your new todo'}
         </Heading>
         <Heading bold size="h4" color="white">
-          Type your todo and press add
+          {editTodo
+            ? 'Edit your todo and tap edit'
+            : 'Type your todo and press add'}
         </Heading>
         <Formik
           initialValues={{
-            todo: '',
+            todo: editTodo ? editTodo.todo : '',
           }}
           validationSchema={TodoSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             // send our todo
-            const res = await addTodo(values);
-            setSubmitting(false);
+            const res = editTodo
+              ? await editTodoAction(editTodo.id, values)
+              : await addTodo(values);
             if (res) {
-              setisOpened(false);
+              close();
             }
+            setSubmitting(false);
             resetForm();
           }}
         >
-          {({ isSubmitting, isValid }) => (
+          {({ isSubmitting, isValid, resetForm }) => (
             <StyledForm>
               <Field
                 type="text"
@@ -76,11 +86,19 @@ const AddTodo = ({ addTodo, loading, error }) => {
                   color="main"
                   type="submit"
                   disabled={!isValid || isSubmitting}
-                  loading={loading ? 'Adding...' : null}
+                  loading={loading ? loadingText : null}
                 >
-                  Add todo
+                  {editTodo ? 'Edit todo' : 'Add todo'}
                 </Button>
-                <Button color="main" contain onClick={() => setisOpened(false)}>
+                <Button
+                  type="button"
+                  color="main"
+                  contain
+                  onClick={() => {
+                    close();
+                    resetForm();
+                  }}
+                >
                   Cancel
                 </Button>
               </ButtonsWrapper>
@@ -104,9 +122,10 @@ const mapStateToProps = ({ todos }) => ({
 
 const mapDispatchToProps = {
   addTodo: actions.addTodo,
+  editTodoAction: actions.editTodo,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddTodo);
+)(InputTodo);

@@ -9,4 +9,4 @@ export {
   clean,
 } from './authActions';
 
-export { addTodo } from './todoActions.js';
+export { addTodo, deleteTodo, editTodo } from './todoActions.js';
