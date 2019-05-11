@@ -43,7 +43,6 @@ const deleteStyles = {
 const Todo = ({ todo }) => {
   const [isDeleting, setisDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  console.log(isDeleting);
 
   return (
     <Wrapper>

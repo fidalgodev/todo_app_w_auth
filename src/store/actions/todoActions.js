@@ -1,11 +1,7 @@
 import * as actions from './actionTypes';
 
 // Add a todo
-export const addTodo = data => async (
-  dispatch,
-  getState,
-  { getFirestore, getFirebase }
-) => {
+export const addTodo = data => async (dispatch, getState, { getFirestore }) => {
   const firestore = getFirestore();
   const userId = getState().firebase.auth.uid;
   dispatch({ type: actions.ADD_TODO_START });
@@ -19,6 +15,7 @@ export const addTodo = data => async (
       todo: data.todo,
     };
     if (!res.data()) {
+      console.log('got here');
       firestore
         .collection('todos')
         .doc(userId)
